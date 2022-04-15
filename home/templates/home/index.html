@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container position-relative text-center text-lg-start" data-aos="zoom-in" data-aos-delay="100">
+      <div class="row">
+        <div class="col-lg-8">
+          <h1>Bienvenue chez <span>Dores Restaurant</span></h1>
+          <h2>Vous livrer de la bonne bouffe, notre priorité</h2>
+
+          <div class="btns">
+            <a href="#menu" class="btn-menu animated fadeInUp scrollto">Notre Menu</a>
+          </div>
+        </div>
+        <div class="col-lg-4 d-flex align-items-center justify-content-center position-relative" data-aos="zoom-in" data-aos-delay="200">
+          <a href="https://www.youtube.com/watch?v=u6BOC7CDUTQ" class="glightbox play-btn"></a>
+        </div>
+
+      </div>
+    </div>
+  </section><!-- End Hero -->
+
+
+
+
+    <!-- ======= Menu Section ======= -->
+  <section id="menu" class="menu section-bg">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Menu</h2>
+        <p>Consultez notre menu savoureux</p>
+      </div>
+      
+      <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+        {% for article in articles %}
+          <div class="col-lg-6 menu-item">
+            <img src="{{article.image.url}}" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="{% url 'detail_article' slug=article.slug %}">{{article.plat}}</a>
+              <span>{{ article.prix }} $</span>
+            </div>
+            <div class="menu-ingredients">
+              {{article.composition}}
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+
+    </div>
+  </section><!-- End Menu Section -->
+
+  <!-- ======= Contact Section ======= -->
+  <section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Contact</h2>
+        <p>Nous Contacter</p>
+      </div>
+    </div>
+
+    <div data-aos="fade-up">
+      <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d61739.224999683145!2d-17.49734846486196!3d14.729457380385922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m5!1s0xec10d4ca4809039%3A0x63e6269b7b050a29!2sPharmacie%20Camp%20Leclerc%2C%20Dakar!3m2!1d14.729377!2d-17.4623287!4m0!5e0!3m2!1sfr!2ssn!4v1649268373158!5m2!1sfr!2ssn" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="container" data-aos="fade-up">
+
+      <div class="row mt-5">
+
+        <div class="col-lg-4">
+          <div class="info">
+            <div class="address">
+              <i class="bi bi-geo-alt"></i>
+              <h4>Lieu:</h4>
+              <p>Liberté 6 pharmacie Camp leclerc</p>
+            </div>
+
+            <div class="open-hours">
+              <i class="bi bi-clock"></i>
+              <h4>Heures d'ouverture:</h4>
+              <p>
+                Lundi-Samedi:<br>
+                11:00 - 23:00 
+              </p>
+            </div>
+
+            <div class="email">
+              <i class="bi bi-envelope"></i>
+              <h4>Email:</h4>
+              <p>doresrestau@gmail.com</p>
+            </div>
+            <div class="phone">
+              <i class="bi bi-phone"></i>
+              <h4>Tél:</h4>
+              <p>+22 77 269 63 64</p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-8 mt-5 mt-lg-0">
+
+          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Votre nom" required>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Votre prenom" required>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Sujet" required>
+            </div>
+            <div class="form-group mt-3">
+              <textarea class="form-control" name="message" rows="8" placeholder="Message" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Send Message</button></div>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Contact Section -->
+
+  {% endblock %}
+
+ 

@@ -1,0 +1,9 @@
+{% autoescape off %}  
+Hey {{ user.first_name }},  
+Veuillez cliquer sur ce lien pour finaliser votre inscription
+
+http://{{ domain }}{% url 'activation_compte' uidb64=uid token=token %}    
+{% endautoescape %}
+
+
+

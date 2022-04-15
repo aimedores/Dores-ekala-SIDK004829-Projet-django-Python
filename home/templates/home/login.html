@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{%load crispy_forms_tags%}
+{% block content %}
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Connexion</h2>
+        <h5>Vous n'avez pas de compte ? Veuillez vous <a href="{% url 'inscription' %}">inscrire</a></h5>
+      </div>
+    </div>
+<div class="col-lg-8 mt-5 mt-lg-0" style="margin-left: 17%;">
+    <div class="card" >
+        <h2 class=" card-header text-white text-center bg-dark mb-3">Se connecter</h2>
+    <div class="card-body" >
+    <form  method="post" >
+    {%csrf_token%}
+      <div class="row mb-3" >
+        <div class="col-12 form-group">
+            {{form|crispy}}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-left: 40%;">Se connecter</button>
+    </form>
+    </div>
+    </div>
+  </div>
+</section>
+
+{% endblock%}

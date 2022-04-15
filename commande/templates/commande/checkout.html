@@ -1,0 +1,183 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load crispy_forms_tags%}
+
+{%block content%}
+  <!--================Checkout Area =================-->
+  <section class=" padding_top">
+    <div class="container">
+
+      <div class="billing_details">
+        <div class="row">
+
+  
+          <form class="row contact_form col-md-12 form-group" method="post" novalidate="novalidate">
+            {% csrf_token %}
+            <div class="col-lg-8 ">
+              <div class="hideable_shipping_form">
+                <h3>Addresse de livraison</h3>
+                <div class="col-md-8 mb-2 form-group">
+                  <input type="text" class="form-control" id="adresse_livraison1" name="adresse_livraison1" placeholder="Adresse 1" />
+                </div>
+                <div class="col-md-8 form-group">
+                  <input type="text" class="form-control" id="adresse_livraison2" name="adresse_livraison2" placeholder="Adresse 2" />
+                </div>
+                <div class="col-md-12 form-group">
+                    {{form.ville_livraison}}
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="number" class="form-control" id="numero_telephone_livraison" name="numero_telephone_livraison" placeholder="Numéro de téléphone"/>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="text" class="form-control" id="code_postal_livraison" name="code_postal_livraison" placeholder="Code postal" />
+                </div>
+                <div class="col-md-12 form-group">
+                  <div class="creat_account">
+                    <input type="checkbox" id="meme_adresse_facturation" name="meme_adresse_facturation"/>
+                    <label for="meme_adresse_facturation">L'adresse de facturation est la même que mon adresse de livraison</label>
+                  </div>
+                  <div class="creat_account">
+                    <input type="checkbox" id="adresse_livraison_par_defaut" name="adresse_livraison_par_defaut"/>
+                    <label for="adresse_livraison_par_defaut">Enregistrer comme adresse de livraison par défaut</label>
+                  </div>
+                  {% if adresse_livraison_par_defaut %}
+                  <div class="creat_account">
+                    <input type="checkbox" id="utiliser_adresse_livraison_par_defaut" name="utiliser_adresse_livraison_par_defaut"/>
+                    <label for="utiliser_adresse_livraison_par_defaut">utiliser l'adresse de livraison par défaut : {{adresse_livraison_par_defaut.adresse1|truncatechars:10}}</label>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              <div class="hideable_billing_form">
+                <h3>Addresse de facturation</h3>
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" id="adresse_facturation1" name="adresse_facturation1" placeholder="Adresse 1" />
+                </div>
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" id="adresse_facturation2" name="adresse_facturation2" placeholder="Adresse 2" />
+                </div>
+                <div class="col-md-12 form-group p_star">
+                  {{form.ville_facturation}}
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="number" class="form-control" id="numero_telephone_facturation" name="numero_telephone_facturation" placeholder="Numéro de téléphone"/>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="text" class="form-control" id="code_postal_facturation" name="code_postal_facturation" placeholder="Code postal" />
+                </div>
+                <div class="col-md-12 form-group">
+                  <div class="creat_account">
+                    <input type="checkbox" id="adresse_facturation_par_defaut" name="adresse_facturation_par_defaut"/>
+                    <label for="adresse_facturation_par_defaut">Enregistrer comme adresse de facturation par défaut</label>
+                  </div>
+                  {% if adresse_facturation_par_defaut %}
+                  <div class="creat_account">
+                    <input type="checkbox" id="utiliser_adresse_facturation_par_defaut" name="utiliser_adresse_facturation_par_defaut"/>
+                    <label for="utiliser_adresse_facturation_par_defaut">utiliser l'adresse de facturation par défaut : {{adresse_facturation_par_defaut.adresse1|truncatechars:10}}</label>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4" >
+              <div class="order_box">
+                <h2>Votre commande</h2>
+                <ul class="list">
+                  <li>
+                    <a href="#">Article(s)
+                      <span>Total</span>
+                    </a>
+                  </li>
+                  {% for article_panier in commande.articles.all %}
+                  <li>
+                    <a href="#">{{article_panier.article.plat}}
+                      <span class="middle">x {{article_panier.quantite}}</span>
+                      <span class="last">{{article_panier.get_prix_final}}</span>
+                    </a>
+                  </li>
+                  {%endfor%}
+                </ul>
+                <ul class="list list_2">
+                  <li>
+                    <a href="#">Subtotal
+                      <span>{{commande.get_total_commande}} $</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">Frais de livraison
+                      <span>4$</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">Total
+                      <span>${{commande.get_total_final}}</span>
+                    </a>
+                  </li>
+                </ul>
+                {% for value, name in form.fields.option_payement.choices %}
+                <div class="payment_item">
+                  <div class="radion_btn">
+                    <input type="radio" id="{{name}}" name="option_payement" value="{{value}}" />
+                    <label for="{{name}}">{{name}}</label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endfor %}
+                <!--
+                <div class="creat_account">
+                  <input type="checkbox" id="f-option4" name="selector" required/>
+                  <label for="f-option4">I’ve read and accept the </label>
+                  <a href="#">terms & conditions*</a>
+                </div>
+                -->
+                <button class="btn btn-danger" type="submit">Proceder au payement</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================End Checkout Area =================-->
+
+
+{% block extra_scripts %}
+<script src="{% static 'projet_ecommerce_django/js/swiper.min.js' %}"></script>
+<script src="{% static 'projet_ecommerce_django/js/price_rangs.js' %}"></script>
+<script>
+var hideable_shipping_form = $('.hideable_shipping_form');
+var hideable_billing_form = $('.hideable_billing_form');
+
+var utiliser_adresse_livraison_par_defaut = document.querySelector("input[name=utiliser_adresse_livraison_par_defaut]");
+var utiliser_adresse_facturation_par_defaut = document.querySelector("input[name=utiliser_adresse_facturation_par_defaut]");
+var meme_adresse_facturation = document.querySelector("input[name=meme_adresse_facturation]");
+
+utiliser_adresse_livraison_par_defaut.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_shipping_form.hide();
+  } else {
+    hideable_shipping_form.show();
+  }
+})
+
+utiliser_adresse_facturation_par_defaut.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_billing_form.hide();
+  } else {
+    hideable_billing_form.show();
+  }
+})
+
+meme_adresse_facturation.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_billing_form.hide();
+  } else {
+    hideable_billing_form.show();
+  }
+})
+$('#select').on('change', function() {
+  alert( this.value );
+});
+</script>
+{%endblock%}
+{%endblock%}

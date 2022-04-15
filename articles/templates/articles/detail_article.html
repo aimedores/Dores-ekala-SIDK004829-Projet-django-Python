@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <!-- ======= Menu Section ======= -->
+   <section id="menu" class="menu section-bg">
+    <div class="container " data-aos="fade-up">
+      
+      <div class="row menu-container " data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-6 menu-item">
+            <img src="{{article.image.url}}" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="">{{article.plat}}</a>
+
+              {% if article.prix_reduction %}
+              <span>{{article.prix_reduction}} $ <del>{{article.prix}}</del> $</span>
+              {%else%}
+              <span>{{ article.prix }} $</span>
+              {% endif %}
+
+            </div>
+            <div class="menu-ingredients">
+              {{article.composition}}
+            </div>
+          </div>
+          <form action="{% url 'ajouter_au_panier' article.slug %}" method="POST" >
+            {% csrf_token %}
+            <div class="col-lg-6 menu-item d-flex justify-content-end">
+              <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+              <input class="input-number col-md-1" name="quantite" type="number" value="1" min="1" max="{{article.quantite}}" style="margin-right: 2%;" >
+              <span class="number-increment"> <i class="ti-plus"></i></span>
+              <button class="btn btn-warning" {% if article.quantite < 1 %} disabled {% endif %}>Commander</button>
+            </div>
+          </form>
+          
+      </div>
+      
+    </div>
+  </section><!-- End Menu Section -->
+
+{% endblock%}

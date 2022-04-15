@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{%load crispy_forms_tags%}
+{% block content %}
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Inscription</h2>
+        <h5>Vous avez un compte ? Veuillez vous <a href="{% url 'connexion' %}">connecter</a></h5>
+      </div>
+    </div>
+<div class="col-lg-8 mt-5 mt-lg-0" style="margin-left: 15%;">
+    <div class="card" >
+        <h2 class=" card-header text-white text-center bg-dark mb-3">S'inscrire</h2>
+    <div class="card-body">
+    <form  method="post" >
+    {%csrf_token%}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+      <div class="row mb-3">
+        <div class="col-md-6 form-group">
+            {{form.first_name|as_crispy_field}}
+        </div>
+        <div class="col-md-6 form-group mt-3 mt-md-0">
+            {{form.last_name|as_crispy_field}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+            {{form.username|as_crispy_field}}
+        </div>
+        <div class="col-md-6 form-group mt-3 mt-md-0">
+            {{form.email|as_crispy_field}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+            {{form.password1|as_crispy_field}}
+        </div>
+        <div class="col-md-6 form-group mt-3 mt-md-0">
+            {{form.password2|as_crispy_field}}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary justify-content-center" style="margin-left: 40%;">S'inscrire</button>
+    </form>
+    </div>
+    </div>
+  </div>
+</section>
+
+{% endblock%}
